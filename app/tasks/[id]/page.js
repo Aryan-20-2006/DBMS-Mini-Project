@@ -1,11 +1,13 @@
 "use client";
 
-import { useParams } from "next/navigation";
+import Link from "next/link";
+import { useParams, useRouter } from "next/navigation";
 import { useCallback, useEffect, useState } from "react";
 import { api, money } from "@/lib/client";
 
 export default function TaskPage() {
   const { id } = useParams();
+  const router = useRouter();
   const [data, setData] = useState(null);
   const [form, setForm] = useState({ amount: "", proposal: "" });
   const [error, setError] = useState("");
@@ -27,6 +29,17 @@ export default function TaskPage() {
       await api(`/api/tasks/${id}/bids`, form);
       setMessage("Your bid was placed.");
       load();
+    } catch (err) {
+      setError(err.message);
+    }
+  }
+
+  async function acceptBid(bidId) {
+    setError("");
+    setMessage("");
+    try {
+      const { contract_id } = await api(`/api/bids/${bidId}/accept`, {});
+      router.push(`/contracts/${contract_id}`);
     } catch (err) {
       setError(err.message);
     }
@@ -73,7 +86,7 @@ export default function TaskPage() {
         <h2>{isPoster ? "Bids on your task" : "Your bid"}</h2>
         <table>
           <thead>
-            <tr><th>Bidder</th><th>Rating</th><th>Amount</th><th>Proposal</th><th>Status</th></tr>
+            <tr><th>Bidder</th><th>Rating</th><th>Amount</th><th>Proposal</th><th>Status</th><th>Action</th></tr>
           </thead>
           <tbody>
             {bids.map((b) => (
@@ -83,9 +96,15 @@ export default function TaskPage() {
                 <td>{money(b.amount)}</td>
                 <td>{b.proposal ?? "-"}</td>
                 <td><span className="badge">{b.status}</span></td>
+                <td>
+                  {isPoster && task.status === "OPEN" && b.status === "PENDING" && (
+                    <button className="btn" onClick={() => acceptBid(b.bid_id)}>Accept and hold money</button>
+                  )}
+                  {b.contract_id && <Link href={`/contracts/${b.contract_id}`}>Open contract</Link>}
+                </td>
               </tr>
             ))}
-            {bids.length === 0 && <tr><td colSpan="5" className="muted">No bids yet.</td></tr>}
+            {bids.length === 0 && <tr><td colSpan="6" className="muted">No bids yet.</td></tr>}
           </tbody>
         </table>
       </div>
