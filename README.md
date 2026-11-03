@@ -16,7 +16,7 @@ You need Node.js 20 or newer, MySQL 8 and MongoDB, with both database services r
 npm install
 ```
 
-**2. Create your settings file**
+**2. Create your settings file** (skip this if `.env.local` already exists, because this command overwrites it)
 
 ```powershell
 Copy-Item .env.example .env.local
