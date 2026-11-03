@@ -2,6 +2,7 @@ import pool from "@/lib/db";
 import { ApiError, handleError, ok } from "@/lib/api";
 import { requireAdmin } from "@/lib/auth";
 import { getContract, updateContractAfterPayment } from "@/lib/contracts";
+import { notify } from "@/lib/notify";
 
 // The admin resolves a dispute with a refund: the disputed milestone's amount
 // moves from the poster's escrow back to the poster's balance.
@@ -58,6 +59,11 @@ export async function POST(request, { params }) {
     await updateContractAfterPayment(conn, contract);
 
     await conn.query("COMMIT");
+
+    const message = `The dispute on "${contract.title}" was resolved: ₹${dispute.amount} was refunded to ${contract.poster}`;
+    const link = `/contracts/${contract.contract_id}`;
+    await notify(contract.poster_id, "DISPUTE_RESOLVED", message, link);
+    await notify(contract.worker_id, "DISPUTE_RESOLVED", message, link);
     return ok({ message: "Refunded" });
   } catch (err) {
     if (conn) await conn.query("ROLLBACK");

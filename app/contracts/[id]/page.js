@@ -2,6 +2,7 @@
 
 import { useParams } from "next/navigation";
 import { useCallback, useEffect, useState } from "react";
+import ChatBox from "@/components/ChatBox";
 import { api, money } from "@/lib/client";
 
 export default function ContractPage() {
@@ -175,6 +176,8 @@ export default function ContractPage() {
           </div>
         </form>
       )}
+
+      <ChatBox contractId={contract.contract_id} userId={userId} />
 
       <div className="card table-wrap">
         <h2>Transaction log</h2>

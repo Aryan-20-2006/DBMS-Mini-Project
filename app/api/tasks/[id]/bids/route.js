@@ -1,6 +1,7 @@
 import pool from "@/lib/db";
 import { ApiError, handleError, ok, parseAmount } from "@/lib/api";
 import { requireStudent } from "@/lib/auth";
+import { notify } from "@/lib/notify";
 
 // Place a bid on an open task.
 export async function POST(request, { params }) {
@@ -25,6 +26,12 @@ export async function POST(request, { params }) {
     const [result] = await pool.execute(
       "INSERT INTO BID (task_id, bidder_id, amount, proposal) VALUES (?, ?, ?, ?)",
       [id, user.id, bidAmount, proposal?.trim() || null]
+    );
+    await notify(
+      task.poster_id,
+      "NEW_BID",
+      `${user.name} bid ₹${bidAmount} on "${task.title}"`,
+      `/tasks/${id}`
     );
     return ok({ bid_id: result.insertId }, 201);
   } catch (err) {

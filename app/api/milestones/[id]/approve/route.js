@@ -2,6 +2,7 @@ import pool from "@/lib/db";
 import { ApiError, handleError, ok } from "@/lib/api";
 import { requireStudent } from "@/lib/auth";
 import { getContract, updateContractAfterPayment } from "@/lib/contracts";
+import { notify } from "@/lib/notify";
 
 // Approve a milestone: moves its amount from the poster's escrow to the worker's balance.
 export async function POST(request, { params }) {
@@ -49,6 +50,13 @@ export async function POST(request, { params }) {
     await updateContractAfterPayment(conn, contract);
 
     await conn.query("COMMIT");
+
+    await notify(
+      contract.worker_id,
+      "MILESTONE_APPROVED",
+      `"${milestone.title}" was approved and ₹${milestone.amount} was paid to you`,
+      `/contracts/${contract.contract_id}`
+    );
     return ok({ message: "Approved" });
   } catch (err) {
     if (conn) await conn.query("ROLLBACK");

@@ -1,6 +1,7 @@
 import pool from "@/lib/db";
 import { ApiError, handleError, ok } from "@/lib/api";
 import { requireStudent } from "@/lib/auth";
+import { notify } from "@/lib/notify";
 
 // Accept a bid: moves the money into escrow and creates the contract.
 // All the changes commit together, or none of them happen.
@@ -22,7 +23,7 @@ export async function POST(request, { params }) {
 
     const [bids] = await conn.execute(
       `SELECT b.bid_id, b.task_id, b.bidder_id, b.amount, b.status,
-              t.poster_id, t.status AS task_status
+              t.poster_id, t.title, t.status AS task_status
        FROM BID b JOIN TASK t ON b.task_id = t.task_id
        WHERE b.bid_id = ? FOR UPDATE`,
       [id]
@@ -62,6 +63,13 @@ export async function POST(request, { params }) {
     );
 
     await conn.query("COMMIT");
+
+    await notify(
+      bid.bidder_id,
+      "BID_ACCEPTED",
+      `Your bid of ₹${bid.amount} on "${bid.title}" was accepted`,
+      `/contracts/${contract.insertId}`
+    );
     return ok({ contract_id: contract.insertId });
   } catch (err) {
     if (conn) await conn.query("ROLLBACK");
