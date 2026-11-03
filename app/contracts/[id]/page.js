@@ -11,6 +11,8 @@ export default function ContractPage() {
   const [message, setMessage] = useState("");
   const [milestoneForm, setMilestoneForm] = useState({ title: "", amount: "", due_date: "" });
   const [reviewForm, setReviewForm] = useState({ rating: "5", comment: "" });
+  const [disputeFor, setDisputeFor] = useState(null);
+  const [disputeReason, setDisputeReason] = useState("");
 
   const load = useCallback(() => {
     api(`/api/contracts/${id}`).then(setData).catch((err) => setError(err.message));
@@ -46,9 +48,22 @@ export default function ContractPage() {
     await run(`/api/contracts/${id}/review`, reviewForm, "Review saved. The rating was updated by the trigger.");
   }
 
+  async function raiseDispute(e) {
+    e.preventDefault();
+    const raised = await run(
+      `/api/milestones/${disputeFor.milestone_id}/dispute`,
+      { reason: disputeReason },
+      "Dispute raised. An admin will review it."
+    );
+    if (raised) {
+      setDisputeFor(null);
+      setDisputeReason("");
+    }
+  }
+
   if (!data) return error ? <p className="error">{error}</p> : <p className="muted">Loading...</p>;
 
-  const { contract, milestones, transactions, reviews, unallocated, role, userId } = data;
+  const { contract, milestones, transactions, disputes, reviews, unallocated, role, userId } = data;
   const isActive = contract.status === "ACTIVE";
   const isClosed = contract.status === "COMPLETED" || contract.status === "REFUNDED";
   const hasReviewed = reviews.some((r) => r.reviewer_id === userId);
@@ -96,6 +111,9 @@ export default function ContractPage() {
                       Approve and release
                     </button>
                   )}
+                  {isActive && (m.status === "PENDING" || m.status === "SUBMITTED") && (
+                    <button className="btn btn-danger" onClick={() => setDisputeFor(m)}>Raise dispute</button>
+                  )}
                 </td>
               </tr>
             ))}
@@ -103,6 +121,39 @@ export default function ContractPage() {
           </tbody>
         </table>
       </div>
+
+      {disputeFor && (
+        <form className="card" onSubmit={raiseDispute}>
+          <h2>Raise a dispute on: {disputeFor.title}</h2>
+          <label>Reason
+            <textarea required rows="3" value={disputeReason}
+              onChange={(e) => setDisputeReason(e.target.value)} />
+          </label>
+          <button className="btn btn-danger">Submit dispute</button>
+          <button type="button" className="btn-link" onClick={() => setDisputeFor(null)}>Cancel</button>
+        </form>
+      )}
+
+      {disputes.length > 0 && (
+        <div className="card table-wrap">
+          <h2>Disputes</h2>
+          <table>
+            <thead>
+              <tr><th>Milestone</th><th>Raised by</th><th>Reason</th><th>Status</th></tr>
+            </thead>
+            <tbody>
+              {disputes.map((d) => (
+                <tr key={d.dispute_id}>
+                  <td>{d.milestone}</td>
+                  <td>{d.raised_by}</td>
+                  <td>{d.reason}</td>
+                  <td><span className="badge">{d.status}</span></td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+      )}
 
       {isActive && role === "POSTER" && Number(unallocated) > 0 && (
         <form className="card" onSubmit={addMilestone}>
