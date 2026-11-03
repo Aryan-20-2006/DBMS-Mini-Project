@@ -5,7 +5,8 @@
   "scripts": {
     "dev": "next dev",
     "build": "next build",
-    "start": "next start"
+    "start": "next start",
+    "reset": "node --env-file=.env.local scripts/reset-db.mjs"
   },
   "dependencies": {
     "bcryptjs": "^3.0.3",

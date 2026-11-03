@@ -57,15 +57,15 @@ All use the password `demo1234`.
 
 New students start with a balance of 0 and there is no top-up feature, so use Aryan or Diya to demo accepting a bid.
 
-## Resetting before a demo
+## Resetting after practice or before a demo
 
-Run the three commands from step 3, then clear chat and notifications:
+Both databases keep their data until you reset them, so run this whenever you want to start again. It deletes everything in them and puts back the sample data, with no password to type.
 
 ```powershell
-mongosh campus_task_board --quiet --eval "db.dropDatabase()"
+npm run reset
 ```
 
-If `mongosh` is not recognised, install MongoDB Shell, which is a separate download from MongoDB.
+It needs `.env.local` set up, and both database services running. It does not need the app to be stopped.
 
 ## Walkthrough: using the app as each user
 
@@ -210,4 +210,5 @@ lib/                     database connections, login helpers, shared contract lo
 app/api/                 route handlers (the API layer)
 app/                     pages
 components/              navigation bar and chat box
+scripts/reset-db.mjs     resets both databases (npm run reset)
 ```
