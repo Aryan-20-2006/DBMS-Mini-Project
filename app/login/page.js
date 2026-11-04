@@ -21,7 +21,7 @@ export default function LoginPage() {
 
   return (
     <form className="card narrow" onSubmit={submit}>
-      <h1>Log in</h1>
+      <h1>👋 Log in</h1>
       {error && <p className="error">{error}</p>}
       <label>Email
         <input type="email" required value={form.email}

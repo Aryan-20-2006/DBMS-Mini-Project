@@ -31,7 +31,7 @@ export default function NewTaskPage() {
 
   return (
     <form className="card narrow" onSubmit={submit}>
-      <h1>Post a task</h1>
+      <h1>📝 Post a task</h1>
       {error && <p className="error">{error}</p>}
       <label>Title
         <input required maxLength="150" value={form.title} onChange={(e) => update("title", e.target.value)} />
@@ -54,7 +54,7 @@ export default function NewTaskPage() {
       <label>Deadline
         <input type="date" required value={form.deadline} onChange={(e) => update("deadline", e.target.value)} />
       </label>
-      <button className="btn">Post task</button>
+      <button className="btn">🚀 Post task</button>
     </form>
   );
 }

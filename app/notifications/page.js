@@ -21,7 +21,7 @@ export default function NotificationsPage() {
 
   return (
     <>
-      <h1>Notifications</h1>
+      <h1>🔔 Notifications</h1>
       <div className="card table-wrap">
         <table>
           <tbody>

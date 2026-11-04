@@ -60,16 +60,16 @@ export default function TaskPage() {
         <p><span className="badge" data-status={task.status}>{task.status}</span></p>
         <p>{task.description ?? "No description."}</p>
         <div className="stats">
-          <div><strong>{money(task.budget)}</strong><span className="muted">Budget</span></div>
-          <div><strong>{task.days_left}</strong><span className="muted">Days left ({task.deadline})</span></div>
-          <div><strong>{task.category ?? "-"}</strong><span className="muted">Category</span></div>
-          <div><strong>{task.poster}</strong><span className="muted">Posted by</span></div>
+          <div><strong>{money(task.budget)}</strong><span className="muted">💰 Budget</span></div>
+          <div><strong>{task.days_left}</strong><span className="muted">⏳ Days left ({task.deadline})</span></div>
+          <div><strong>{task.category ?? "-"}</strong><span className="muted">🏷️ Category</span></div>
+          <div><strong>{task.poster}</strong><span className="muted">👤 Posted by</span></div>
         </div>
       </div>
 
       {canBid && (
         <form className="card" onSubmit={placeBid}>
-          <h2>Place a bid</h2>
+          <h2>💸 Place a bid</h2>
           <label>Your amount (₹)
             <input type="number" required min="1" step="0.01" value={form.amount}
               onChange={(e) => setForm({ ...form, amount: e.target.value })} />
@@ -78,12 +78,12 @@ export default function TaskPage() {
             <textarea rows="3" value={form.proposal}
               onChange={(e) => setForm({ ...form, proposal: e.target.value })} />
           </label>
-          <button className="btn">Place bid</button>
+          <button className="btn">💸 Place bid</button>
         </form>
       )}
 
       <div className="card table-wrap">
-        <h2>{isPoster ? "Bids on your task" : "Your bid"}</h2>
+        <h2>{isPoster ? "🙋 Bids on your task" : "🙋 Your bid"}</h2>
         <table>
           <thead>
             <tr><th>Bidder</th><th>Rating</th><th>Amount</th><th>Proposal</th><th>Status</th><th>Action</th></tr>
@@ -98,7 +98,7 @@ export default function TaskPage() {
                 <td><span className="badge" data-status={b.status}>{b.status}</span></td>
                 <td>
                   {isPoster && task.status === "OPEN" && b.status === "PENDING" && (
-                    <button className="btn" onClick={() => acceptBid(b.bid_id)}>Accept and hold money</button>
+                    <button className="btn" onClick={() => acceptBid(b.bid_id)}>🤝 Accept and hold money</button>
                   )}
                   {b.contract_id && <Link href={`/contracts/${b.contract_id}`}>Open contract</Link>}
                 </td>

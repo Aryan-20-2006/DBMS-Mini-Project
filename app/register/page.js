@@ -31,7 +31,7 @@ export default function RegisterPage() {
 
   return (
     <form className="card narrow" onSubmit={submit}>
-      <h1>Create an account</h1>
+      <h1>🎓 Create an account</h1>
       {error && <p className="error">{error}</p>}
       {FIELDS.map((f) => (
         <label key={f.name}>{f.label}

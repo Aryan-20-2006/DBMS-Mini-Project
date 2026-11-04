@@ -32,21 +32,21 @@ export default function Nav() {
 
   return (
     <header className="nav">
-      <strong className="brand">Campus Task Board</strong>
+      <strong className="brand">🎓 Campus Task Board</strong>
       {!onAuthPage && user && (
         <>
           <nav>
             {user.role === "STUDENT" ? (
               <>
-                <Link href="/tasks" aria-current={pathname === "/tasks" ? "page" : undefined}>Browse tasks</Link>
-                <Link href="/tasks/new" aria-current={pathname === "/tasks/new" ? "page" : undefined}>Post a task</Link>
-                <Link href="/dashboard" aria-current={pathname === "/dashboard" ? "page" : undefined}>Dashboard</Link>
+                <Link href="/tasks" aria-current={pathname === "/tasks" ? "page" : undefined}>🔍 Browse tasks</Link>
+                <Link href="/tasks/new" aria-current={pathname === "/tasks/new" ? "page" : undefined}>📝 Post a task</Link>
+                <Link href="/dashboard" aria-current={pathname === "/dashboard" ? "page" : undefined}>📊 Dashboard</Link>
                 <Link href="/notifications" aria-current={pathname === "/notifications" ? "page" : undefined}>
-                  Notifications {unread > 0 && <span className="badge">{unread}</span>}
+                  🔔 Notifications {unread > 0 && <span className="badge">{unread}</span>}
                 </Link>
               </>
             ) : (
-              <Link href="/admin" aria-current={pathname === "/admin" ? "page" : undefined}>Disputes</Link>
+              <Link href="/admin" aria-current={pathname === "/admin" ? "page" : undefined}>⚖️ Disputes</Link>
             )}
           </nav>
           <span className="nav-user">

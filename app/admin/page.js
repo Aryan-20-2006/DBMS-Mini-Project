@@ -35,12 +35,12 @@ export default function AdminPage() {
 
   return (
     <>
-      <h1>Admin dashboard</h1>
+      <h1>🛡️ Admin dashboard</h1>
       {error && <p className="error">{error}</p>}
       {message && <p className="success">{message}</p>}
 
       <div className="card table-wrap">
-        <h2>Open disputes ({open.length})</h2>
+        <h2>⚠️ Open disputes ({open.length})</h2>
         <table>
           <thead>
             <tr><th>Task</th><th>Milestone</th><th>Amount</th><th>Poster</th><th>Worker</th><th>Raised by</th><th>Reason</th><th>Action</th></tr>
@@ -55,7 +55,7 @@ export default function AdminPage() {
                 <td>{d.worker}</td>
                 <td>{d.raised_by}</td>
                 <td>{d.reason}</td>
-                <td><button className="btn btn-danger" onClick={() => refund(d.dispute_id)}>Refund poster</button></td>
+                <td><button className="btn btn-danger" onClick={() => refund(d.dispute_id)}>↩️ Refund poster</button></td>
               </tr>
             ))}
             {open.length === 0 && <tr><td colSpan="8" className="muted">No open disputes.</td></tr>}
@@ -64,7 +64,7 @@ export default function AdminPage() {
       </div>
 
       <div className="card table-wrap">
-        <h2>Resolved disputes</h2>
+        <h2>✅ Resolved disputes</h2>
         <table>
           <thead>
             <tr><th>Task</th><th>Milestone</th><th>Amount</th><th>Reason</th><th>Status</th><th>Handled by</th></tr>

@@ -37,7 +37,7 @@ export default function ChatBox({ contractId, userId }) {
 
   return (
     <div className="card">
-      <h2>Chat</h2>
+      <h2>💬 Chat</h2>
       {error && <p className="error">{error}</p>}
       <div className="chat">
         {messages.map((m) => (
@@ -52,7 +52,7 @@ export default function ChatBox({ contractId, userId }) {
         <label>Message
           <input required maxLength="1000" value={text} onChange={(e) => setText(e.target.value)} />
         </label>
-        <button className="btn">Send</button>
+        <button className="btn">📨 Send</button>
       </form>
     </div>
   );

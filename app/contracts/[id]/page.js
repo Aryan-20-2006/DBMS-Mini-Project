@@ -78,15 +78,15 @@ export default function ContractPage() {
       <div className="card">
         <p><span className="badge" data-status={contract.status}>{contract.status}</span></p>
         <div className="stats">
-          <div><strong>{money(contract.agreed_amount)}</strong><span className="muted">Agreed amount</span></div>
-          <div><strong>{money(unallocated)}</strong><span className="muted">Not yet in a milestone</span></div>
-          <div><strong>{contract.poster}</strong><span className="muted">Poster</span></div>
-          <div><strong>{contract.worker}</strong><span className="muted">Worker</span></div>
+          <div><strong>{money(contract.agreed_amount)}</strong><span className="muted">🤝 Agreed amount</span></div>
+          <div><strong>{money(unallocated)}</strong><span className="muted">📦 Not yet in a milestone</span></div>
+          <div><strong>{contract.poster}</strong><span className="muted">📣 Poster</span></div>
+          <div><strong>{contract.worker}</strong><span className="muted">🛠️ Worker</span></div>
         </div>
       </div>
 
       <div className="card table-wrap">
-        <h2>Milestones</h2>
+        <h2>🏁 Milestones</h2>
         <table>
           <thead>
             <tr><th>#</th><th>Title</th><th>Amount</th><th>Due</th><th>Status</th><th>Action</th></tr>
@@ -103,17 +103,17 @@ export default function ContractPage() {
                   {isActive && role === "WORKER" && m.status === "PENDING" && (
                     <button className="btn"
                       onClick={() => run(`/api/milestones/${m.milestone_id}/submit`, {}, "Milestone submitted.")}>
-                      Mark as submitted
+                      📤 Mark as submitted
                     </button>
                   )}
                   {isActive && role === "POSTER" && m.status === "SUBMITTED" && (
                     <button className="btn"
                       onClick={() => run(`/api/milestones/${m.milestone_id}/approve`, {}, "Approved. The money was released to the worker.")}>
-                      Approve and release
+                      ✅ Approve and release
                     </button>
                   )}
                   {isActive && (m.status === "PENDING" || m.status === "SUBMITTED") && (
-                    <button className="btn btn-danger" onClick={() => setDisputeFor(m)}>Raise dispute</button>
+                    <button className="btn btn-danger" onClick={() => setDisputeFor(m)}>🚩 Raise dispute</button>
                   )}
                 </td>
               </tr>
@@ -125,19 +125,19 @@ export default function ContractPage() {
 
       {disputeFor && (
         <form className="card" onSubmit={raiseDispute}>
-          <h2>Raise a dispute on: {disputeFor.title}</h2>
+          <h2>🚩 Raise a dispute on: {disputeFor.title}</h2>
           <label>Reason
             <textarea required rows="3" value={disputeReason}
               onChange={(e) => setDisputeReason(e.target.value)} />
           </label>
-          <button className="btn btn-danger">Submit dispute</button>
+          <button className="btn btn-danger">🚩 Submit dispute</button>
           <button type="button" className="btn-link" onClick={() => setDisputeFor(null)}>Cancel</button>
         </form>
       )}
 
       {disputes.length > 0 && (
         <div className="card table-wrap">
-          <h2>Disputes</h2>
+          <h2>⚠️ Disputes</h2>
           <table>
             <thead>
               <tr><th>Milestone</th><th>Raised by</th><th>Reason</th><th>Status</th></tr>
@@ -158,7 +158,7 @@ export default function ContractPage() {
 
       {isActive && role === "POSTER" && Number(unallocated) > 0 && (
         <form className="card" onSubmit={addMilestone}>
-          <h2>Add a milestone</h2>
+          <h2>➕ Add a milestone</h2>
           <div className="row">
             <label>Title
               <input required maxLength="100" value={milestoneForm.title}
@@ -180,7 +180,7 @@ export default function ContractPage() {
       <ChatBox contractId={contract.contract_id} userId={userId} />
 
       <div className="card table-wrap">
-        <h2>Transaction log</h2>
+        <h2>🧾 Transaction log</h2>
         <table>
           <thead>
             <tr><th>Type</th><th>Amount</th><th>From</th><th>To</th><th>Milestone</th><th>When</th></tr>
@@ -201,7 +201,7 @@ export default function ContractPage() {
       </div>
 
       <div className="card">
-        <h2>Reviews</h2>
+        <h2>⭐ Reviews</h2>
         {reviews.map((r) => (
           <p key={r.review_id}><strong>{r.reviewer}</strong>: {r.rating}/5 {r.comment && `- ${r.comment}`}</p>
         ))}
@@ -218,7 +218,7 @@ export default function ContractPage() {
               <textarea rows="2" value={reviewForm.comment}
                 onChange={(e) => setReviewForm({ ...reviewForm, comment: e.target.value })} />
             </label>
-            <button className="btn">Leave review</button>
+            <button className="btn">⭐ Leave review</button>
           </form>
         )}
       </div>

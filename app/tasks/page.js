@@ -32,7 +32,7 @@ export default function BrowseTasksPage() {
 
   return (
     <>
-      <h1>Open tasks</h1>
+      <h1>🔍 Open tasks</h1>
       <form className="card row" onSubmit={submit}>
         <label>Search title
           <input value={filters.search}
@@ -51,7 +51,7 @@ export default function BrowseTasksPage() {
           <input type="number" min="1" step="0.01" value={filters.maxBudget}
             onChange={(e) => setFilters({ ...filters, maxBudget: e.target.value })} />
         </label>
-        <button className="btn">Filter</button>
+        <button className="btn">🔍 Filter</button>
       </form>
 
       {error && <p className="error">{error}</p>}

@@ -43,24 +43,24 @@ export default function DashboardPage() {
 
   return (
     <>
-      <h1>Dashboard</h1>
+      <h1>📊 Dashboard</h1>
 
       <div className="card">
-        <h2>My wallet</h2>
+        <h2>💰 My wallet</h2>
         <div className="stats">
-          <div><strong>{money(wallet.balance)}</strong><span className="muted">Available</span></div>
-          <div><strong>{money(wallet.held_amount)}</strong><span className="muted">Held in escrow</span></div>
-          <div><strong>{wallet.avg_rating}</strong><span className="muted">Rating (stored, set by trigger)</span></div>
-          <div><strong>{liveRating}</strong><span className="muted">Rating (fn_avg_rating)</span></div>
-          <div><strong>{summary.bids_placed}</strong><span className="muted">Bids placed</span></div>
+          <div><strong>{money(wallet.balance)}</strong><span className="muted">💵 Available</span></div>
+          <div><strong>{money(wallet.held_amount)}</strong><span className="muted">🔒 Held in escrow</span></div>
+          <div><strong>{wallet.avg_rating}</strong><span className="muted">⭐ Rating (stored, set by trigger)</span></div>
+          <div><strong>{liveRating}</strong><span className="muted">⭐ Rating (fn_avg_rating)</span></div>
+          <div><strong>{summary.bids_placed}</strong><span className="muted">🙋 Bids placed</span></div>
         </div>
       </div>
 
-      <ContractTable title="Active contracts" contracts={activeContracts} />
-      <ContractTable title="Disputed and closed contracts" contracts={otherContracts} />
+      <ContractTable title="🤝 Active contracts" contracts={activeContracts} />
+      <ContractTable title="📁 Disputed and closed contracts" contracts={otherContracts} />
 
       <div className="card table-wrap">
-        <h2>My tasks</h2>
+        <h2>📋 My tasks</h2>
         <table>
           <thead>
             <tr><th>Task</th><th>Budget</th><th>Deadline</th><th>Bids</th><th>Status</th></tr>
@@ -81,7 +81,7 @@ export default function DashboardPage() {
       </div>
 
       <div className="card table-wrap">
-        <h2>My bids</h2>
+        <h2>🙋 My bids</h2>
         <table>
           <thead>
             <tr><th>Task</th><th>Amount</th><th>Status</th><th>Contract</th></tr>
