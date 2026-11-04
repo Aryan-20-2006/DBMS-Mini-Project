@@ -57,7 +57,7 @@ export default function TaskPage() {
       {message && <p className="success">{message}</p>}
 
       <div className="card">
-        <p><span className="badge">{task.status}</span></p>
+        <p><span className="badge" data-status={task.status}>{task.status}</span></p>
         <p>{task.description ?? "No description."}</p>
         <div className="stats">
           <div><strong>{money(task.budget)}</strong><span className="muted">Budget</span></div>
@@ -95,7 +95,7 @@ export default function TaskPage() {
                 <td>{b.avg_rating}</td>
                 <td>{money(b.amount)}</td>
                 <td>{b.proposal ?? "-"}</td>
-                <td><span className="badge">{b.status}</span></td>
+                <td><span className="badge" data-status={b.status}>{b.status}</span></td>
                 <td>
                   {isPoster && task.status === "OPEN" && b.status === "PENDING" && (
                     <button className="btn" onClick={() => acceptBid(b.bid_id)}>Accept and hold money</button>

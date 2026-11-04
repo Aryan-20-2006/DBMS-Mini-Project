@@ -76,7 +76,7 @@ export default function ContractPage() {
       {message && <p className="success">{message}</p>}
 
       <div className="card">
-        <p><span className="badge">{contract.status}</span></p>
+        <p><span className="badge" data-status={contract.status}>{contract.status}</span></p>
         <div className="stats">
           <div><strong>{money(contract.agreed_amount)}</strong><span className="muted">Agreed amount</span></div>
           <div><strong>{money(unallocated)}</strong><span className="muted">Not yet in a milestone</span></div>
@@ -98,7 +98,7 @@ export default function ContractPage() {
                 <td>{m.title}</td>
                 <td>{money(m.amount)}</td>
                 <td>{m.due_date ?? "-"}</td>
-                <td><span className="badge">{m.status}</span></td>
+                <td><span className="badge" data-status={m.status}>{m.status}</span></td>
                 <td>
                   {isActive && role === "WORKER" && m.status === "PENDING" && (
                     <button className="btn"
@@ -148,7 +148,7 @@ export default function ContractPage() {
                   <td>{d.milestone}</td>
                   <td>{d.raised_by}</td>
                   <td>{d.reason}</td>
-                  <td><span className="badge">{d.status}</span></td>
+                  <td><span className="badge" data-status={d.status}>{d.status}</span></td>
                 </tr>
               ))}
             </tbody>
@@ -188,7 +188,7 @@ export default function ContractPage() {
           <tbody>
             {transactions.map((t) => (
               <tr key={t.txn_id}>
-                <td><span className="badge">{t.type}</span></td>
+                <td><span className="badge" data-status={t.type}>{t.type}</span></td>
                 <td>{money(t.amount)}</td>
                 <td>{t.from_name}</td>
                 <td>{t.to_name}</td>

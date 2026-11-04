@@ -76,7 +76,7 @@ export default function AdminPage() {
                 <td>{d.milestone}</td>
                 <td>{money(d.amount)}</td>
                 <td>{d.reason}</td>
-                <td><span className="badge">{d.status}</span></td>
+                <td><span className="badge" data-status={d.status}>{d.status}</span></td>
                 <td>{d.handled_by}</td>
               </tr>
             ))}

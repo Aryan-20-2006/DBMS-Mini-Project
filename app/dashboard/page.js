@@ -19,7 +19,7 @@ function ContractTable({ title, contracts }) {
               <td>{c.poster}</td>
               <td>{c.worker}</td>
               <td>{money(c.agreed_amount)}</td>
-              <td><span className="badge">{c.status}</span></td>
+              <td><span className="badge" data-status={c.status}>{c.status}</span></td>
             </tr>
           ))}
           {contracts.length === 0 && <tr><td colSpan="5" className="muted">None.</td></tr>}
@@ -72,7 +72,7 @@ export default function DashboardPage() {
                 <td>{money(t.budget)}</td>
                 <td>{t.deadline}</td>
                 <td>{t.bid_count}</td>
-                <td><span className="badge">{t.status}</span></td>
+                <td><span className="badge" data-status={t.status}>{t.status}</span></td>
               </tr>
             ))}
             {myTasks.length === 0 && <tr><td colSpan="5" className="muted">None.</td></tr>}
@@ -91,7 +91,7 @@ export default function DashboardPage() {
               <tr key={b.bid_id}>
                 <td><Link href={`/tasks/${b.task_id}`}>{b.title}</Link></td>
                 <td>{money(b.amount)}</td>
-                <td><span className="badge">{b.status}</span></td>
+                <td><span className="badge" data-status={b.status}>{b.status}</span></td>
                 <td>{b.contract_id ? <Link href={`/contracts/${b.contract_id}`}>Open</Link> : "-"}</td>
               </tr>
             ))}

@@ -38,15 +38,15 @@ export default function Nav() {
           <nav>
             {user.role === "STUDENT" ? (
               <>
-                <Link href="/tasks">Browse tasks</Link>
-                <Link href="/tasks/new">Post a task</Link>
-                <Link href="/dashboard">Dashboard</Link>
-                <Link href="/notifications">
+                <Link href="/tasks" aria-current={pathname === "/tasks" ? "page" : undefined}>Browse tasks</Link>
+                <Link href="/tasks/new" aria-current={pathname === "/tasks/new" ? "page" : undefined}>Post a task</Link>
+                <Link href="/dashboard" aria-current={pathname === "/dashboard" ? "page" : undefined}>Dashboard</Link>
+                <Link href="/notifications" aria-current={pathname === "/notifications" ? "page" : undefined}>
                   Notifications {unread > 0 && <span className="badge">{unread}</span>}
                 </Link>
               </>
             ) : (
-              <Link href="/admin">Disputes</Link>
+              <Link href="/admin" aria-current={pathname === "/admin" ? "page" : undefined}>Disputes</Link>
             )}
           </nav>
           <span className="nav-user">

@@ -41,7 +41,7 @@ export default function ChatBox({ contractId, userId }) {
       {error && <p className="error">{error}</p>}
       <div className="chat">
         {messages.map((m) => (
-          <p key={m._id}>
+          <p key={m._id} className={m.sender_id === userId ? "mine" : undefined}>
             <strong>{m.sender_id === userId ? "You" : m.sender_name}:</strong> {m.text}{" "}
             <span className="muted">{new Date(m.created_at).toLocaleTimeString()}</span>
           </p>
